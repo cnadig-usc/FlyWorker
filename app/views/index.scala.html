@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Video Munger</title>
+    <script src="@routes.Assets.at("lib/angular/angular.js")"></script>
+    <script src="@routes.Assets.at("lib/angular/angular-route.js")"></script>
+    <script src="@routes.Assets.at("lib/angular/angular-resource.js")"></script>
+    <script src="@routes.Assets.at("lib/javascript/jquery-1.9.0.min.js")"></script>
+
+    <script src="@routes.Assets.at("lib/angular-bootstrap/ui-bootstrap-custom-0.10.0.js")"></script>
+    <script src="@routes.Assets.at("lib/angular-bootstrap/ui-bootstrap-custom-tpls-0.10.0.js")"></script>
+
+    <link rel="stylesheet" href="@routes.Assets.at("lib/dist/css/bootstrap.css")"></link>
+    <link rel="stylesheet" href="@routes.Assets.at("lib/dist/css/bootstrap-theme.css")"></link>
+    <link rel="stylesheet" href="@routes.Assets.at("app/css/main.css")"></link>
+
+    <script src="@routes.Assets.at("lib/dist/js/bootstrap.js")"></script>
+    <script src="@routes.Assets.at("app/js/app.js")"></script>
+    <script src="@routes.Assets.at("app/js/controllers.js")"></script>
+
+
+
+
+
+
+
+</head>
+<body ng-app="videoMunger" ng-controller="MainController">
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <a class="navbar-brand" href="/">Tower Lab</a>
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/about">About</a></li>
+        <li class="active"><a href="/contactus">Contact Us</a></li>
+    </ul>
+</nav>
+<div ng-view> </div>
+
+</body>
+
+</html>
