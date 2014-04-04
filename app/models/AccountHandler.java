@@ -18,7 +18,7 @@ public class AccountHandler {
     //public static Model.Finder<String, Account> find = new Model.Finder<String,Account>(String.class, Account.class);
 
     public static Message authenticate (String username, String password) {
-        System.out.println("username:" +username+ " password: "+password);
+//        System.out.println("username:" +username+ " password: "+password);
         List<Account> list = Ebean.find(Account.class)
                 .where()
                 .eq("username", username)

@@ -28,10 +28,10 @@ public class Application extends Controller {
 
     public static Result loadPartial(String any) throws IOException {
 
-        File jsonFile = Play.application().getFile("public/app/partials/"+any+".html");
-        String json = FileUtils.readFileToString(jsonFile);
-        if (jsonFile.exists())
-            return ok(json).as("text/html");
+        File file = Play.application().getFile("public/app/partials/"+any+".html");
+        String fileStr = FileUtils.readFileToString(file);
+        if (file.exists())
+            return ok(fileStr).as("text/html");
             //return ok(Scala.io.Source.fromFile(file.getCanonicalFile()).mkString).as("text/html");
         else
             return notFound();
