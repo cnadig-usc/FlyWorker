@@ -9,7 +9,6 @@ import org.apache.commons.io.FileUtils;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,10 +16,20 @@ import java.io.IOException;
 
 
 public class Application extends Controller {
-    public static Result index(String any) {
+    public static Result index(String any) throws IOException {
         //Account ac = new Account("chaitanya nadig", "chai.nadig","mypassword");
         //Ebean.save(ac);
-        return ok(index.render());
+//        return ok(index.render());
+
+
+        File file = Play.application().getFile("public/mainindex.html");
+        String fileStr = FileUtils.readFileToString(file);
+        if (file.exists())
+            return ok(fileStr).as("text/html");
+            //return ok(Scala.io.Source.fromFile(file.getCanonicalFile()).mkString).as("text/html");
+        else
+            return notFound();
+
     }
     public static Result tryPost() {
         return ok (Play.application().path().toString());
@@ -47,6 +56,7 @@ public class Application extends Controller {
         } else if (msg == Message.WRONG_PASSWORD) {
             return unauthorized(msg.toString());
         }
+        response().setCookie("VideoMunger", json.get("username").getAsString());
         return ok("authenticated!");
     }
 

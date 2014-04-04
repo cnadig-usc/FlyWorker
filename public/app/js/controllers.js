@@ -1,11 +1,24 @@
 'use strict';
 
-function MainController ($scope) {
+function MainController ($scope, $location, $cookies) {
     $scope.test = "Hey!"
     $scope.goToDashboard = function(login) {
 
         $scope.login = login;
         alert("go to dashboard!");
+        $scope.$apply($location.path('/dashboard'));
+
+    }
+
+
+
+}
+function DashboardCtrl ($scope, $location, $cookies) {
+    alert('dbc ctrl');
+    if ($cookies.VideoMunger) {
+        alert('cookie is set');
+    } else {
+        $scope.apply($location.path('/'));
 
     }
 }
@@ -16,7 +29,7 @@ function AboutCtrl ($scope) {
 function ContactUsCtrl($scope) {
 
 }
-var LoginCtrl = function ($scope) {
+var LoginCtrl = function ($scope,$location, $cookies) {
 
     $scope.open = function()  {
 

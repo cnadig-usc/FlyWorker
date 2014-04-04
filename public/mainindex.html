@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Video Munger</title>
+    <script src="/assets/lib/angular/angular.js"></script>
+    <script src="/assets/lib/angular/angular-cookies.js"></script>
+    <script src="/assets/lib/angular/angular-route.js"></script>
+    <script src="/assets/lib/angular/angular-resource.js"></script>
+    <script src="/assets/lib/javascript/jquery-1.9.0.min.js"></script>
+
+    <script src="/assets/lib/angular-bootstrap/ui-bootstrap-custom-0.10.0.js"></script>
+    <script src="/assets/lib/angular-bootstrap/ui-bootstrap-custom-tpls-0.10.0.js"></script>
+
+    <link rel="stylesheet" href="/assets/lib/dist/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="/assets/lib/dist/css/bootstrap-theme.css"></link>
+    <link rel="stylesheet" href="/assets/app/css/main.css"></link>
+
+    <script src="/assets/lib/dist/js/bootstrap.js"></script>
+    <script src="/assets/app/js/app.js"></script>
+    <script src="/assets/app/js/controllers.js"></script>
+
+
+
+
+
+
+
+</head>
+<body ng-app="videoMunger" ng-controller="MainController">
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <a class="navbar-brand" href="/">Tower Lab</a>
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/about">Abouts</a></li>
+        <li class="active"><a href="/contactus">Contact Us</a></li>
+    </ul>
+</nav>
+<div ng-view> </div>
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="well well-lg">
+        <p><h4>Developed by Chai Nadig</h4></p>
+        <p>cnadig@usc.edu</p>
+    </div>
+</nav>
+</body>
+
+</html>
