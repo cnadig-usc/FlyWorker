@@ -3,33 +3,78 @@
 function MainController ($scope, $location, $cookies) {
     $scope.test = "Hey!"
     $scope.goToDashboard = function(login) {
-
         $scope.login = login;
-        alert("go to dashboard!");
-        $scope.$apply($location.path('/dashboard'));
+        //alert("go to dashboard!");
+        $location.path('/dashboard');
 
     }
+    $scope.setLoginNavigationBar = function () {
+        $scope.navigationBar = [
+                {
+                    content:"About",
+                    link:"/about"
+
+                },
+                {
+                    content:"Contact Us",
+                    link:"/contactus"
 
 
+                }
+            ];
+    }
+    $scope.setDashboardNavigationBar = function () {
+        $scope.navigationBar = [
+                {
+                    content: "Dashboard",
+                    link: "#"
+                },
+                {
+                    content:"Logout",
+                    link:"/logout"
+                }
+            ];
+    }
+    $scope.goToRoot = function () {
+        alert("going to root");
+            $location.path('/');
+        }
+    $scope.logout = function () {
+            $cookies.VideoMunger = undefined;
 
+            alert("logfdfdout");
+
+            $scope.setLoginNavigationBar();
+            //$scope.goToRoot();
+        }
+    $scope.setLoginNavigationBar();
 }
-function DashboardCtrl ($scope, $location, $cookies) {
+
+
+function DashboardCtrl ($scope, $cookies) {
     alert('dbc ctrl');
     if ($cookies.VideoMunger) {
         alert('cookie is set');
+        $scope.setDashboardNavigationBar();
     } else {
-        $scope.apply($location.path('/'));
-
+        $scope.goToRoot();
     }
-}
 
-function AboutCtrl ($scope) {
-
-}
-function ContactUsCtrl($scope) {
+     //$scope.$apply();
 
 }
-var LoginCtrl = function ($scope,$location, $cookies) {
+
+
+var LoginCtrl = function ($scope, $cookies) {
+    alert("login ctrl");
+    if ($cookies.VideoMunger) {
+        $scope.goToDashboard($scope.login);
+
+        alert($cookies.VideoMunger);
+    } else {
+        //$scope.goToRoot();
+    }
+
 
     $scope.open = function()  {
 
@@ -58,6 +103,21 @@ var LoginCtrl = function ($scope,$location, $cookies) {
 
     }
 };
+function LogoutCtrl($scope,$cookies ) {
+    alert('logout ctrl');
+
+    $scope.logout();
+    $scope.goToRoot();
+
+
+
+}
+function AboutCtrl ($scope) {
+
+}
+function ContactUsCtrl($scope) {
+
+}
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.

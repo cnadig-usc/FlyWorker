@@ -27,12 +27,12 @@
 
 
 </head>
-<body ng-app="videoMunger" ng-controller="MainController">
+<body id="mainController" ng-app="videoMunger" ng-controller="MainController">
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
     <a class="navbar-brand" href="/">Tower Lab</a>
     <ul class="nav navbar-nav">
-        <li class="active"><a href="/about">Abouts</a></li>
-        <li class="active"><a href="/contactus">Contact Us</a></li>
+        <li ng-repeat="item in navigationBar" class="active"><a href={{item.link}}>{{item.content}}</a></li>
+        <!-- <li class="active"><a href="/contactus">Contact Us</a></li> -->
     </ul>
 </nav>
 <div ng-view> </div>
