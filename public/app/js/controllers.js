@@ -1,6 +1,6 @@
 'use strict';
 function MainController ($scope, $location, $cookies) {
-    $scope.test = "Hey!"
+    $scope.msg = "No cohort open";
     $scope.goToDashboard = function(login) {
         $scope.login = login;
         $location.path('/dashboard');
@@ -52,6 +52,24 @@ function DashboardCtrl ($scope, $cookies) {
     } else {
         $scope.goToRoot();
     }
+
+    $scope.openCohort = false;
+
+
+
+    $scope.createCohort = function() {
+
+//        $scope.cname = "";
+//        $scope.nflies = "";
+//        $scope.ngroups = "";
+        $scope.openCohort = true;
+        $scope.cohortName = $scope.cname;
+        $scope.noOfGroups = $scope.ngroups;
+        $scope.noOfFlies = $scope.nflies;
+        $scope.msg = "you've opened a new cohort";
+    }
+
+
      //$scope.$apply();
 }
 function LoginCtrl($scope, $cookies) {

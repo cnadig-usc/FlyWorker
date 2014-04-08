@@ -1,3 +1,74 @@
-<div>
-    You're in the dashboard
+<div class="container-fluid dashboard">
+
+    <div>
+        <div class="col-md-12"></div>
+    </div>
+    <div class="row">
+        <br>
+        <div class="col-md-4">
+            <div class="list-group">
+                <ul> <!-- this ul is here only to push the list items to the right. with li, the hover thing doens't work! :( -->
+                    <a class="list-group-item active" style="color:white;"> ... </a>
+                    <a data-toggle="modal" data-target=".bs-example-modal-sm" class="list-group-item">Track new cohort</a>
+                    <a class="list-group-item">Continue tracking </a>
+                </ul>
+
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="page-header">
+                    <h1>{{cohortName}} <small>{{msg}}</small></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+
+                        <tr>
+                            <td> <video-element name="Chai">d</video-element></td>
+                            <td> <video-element name="Nadig">d</video-element></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Cohort Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Cohort Name</span>
+                        <input ng-model="cname" type="text" class="form-control" style="width:150px">
+
+                        <span class="input-group-addon">Number of flies</span>
+                        <input ng-model="nflies" type="text" class="form-control" style="width:100px">
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Number of Groups</span>
+                        <input ng-model="ngroups" type="text" class="form-control" style="width:117px">
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input ng-click="createCohort()" type="submit" class="btn btn-primary" data-dismiss="modal" value="Create Cohort">
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

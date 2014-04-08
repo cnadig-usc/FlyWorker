@@ -1,6 +1,6 @@
 'use.strict'
 
-angular.module('videoMunger',['ngRoute', 'ngCookies','ui.bootstrap'])
+angular.module('videoMunger',['ngRoute', 'ngCookies','ui.bootstrap', 'vmComponents'])
     .config(['$routeProvider','$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider.
             when('/login', {templateUrl: "/partials/login", controller: LoginCtrl}).
