@@ -4,9 +4,19 @@ angular.module('vmComponents', [] )
             restrict:'E',
 
             scope:{
-                videoName:'=name'
+                videoName:'@names'
             },
-            templateUrl: "/partials/videoelement"
+            templateUrl: "/partials/videoelement",
+            link: function (scope, elem, attrs) {
+//                console.log(scope);
+//                console.log(elem);
+//                console.log(attrs);
+            },
+            controller: function ($scope) {
+//                console.log($scope);
 
-        }
+
+            }
+
+        };
     });
