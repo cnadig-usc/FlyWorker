@@ -42,7 +42,7 @@
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <form>
+            <form name="newCohort" ng-submit="createCohort()">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Cohort Details</h4>
@@ -50,23 +50,33 @@
                 <div class="modal-body">
                     <div class="input-group">
                         <span class="input-group-addon">Cohort Name</span>
-                        <input ng-model="cname" type="text" class="form-control" style="width:150px">
-
+                        <input ng-model="cname" type="text" class="form-control" style="width:150px" required>
+                        
                         <span class="input-group-addon">Number of flies</span>
-                        <input ng-model="nflies" type="text" class="form-control" style="width:100px">
+                        <input ng-model="nflies" type="text" class="form-control" style="width:120px" required>
                     </div>
                     <br>
+                    <br>
 
-                    <div class="input-group">
-                        <span class="input-group-addon">Number of Groups</span>
-                        <input ng-model="ngroups" type="text" class="form-control" style="width:117px">
+
+                    <p>
+                        <button ng-click="addGroup()" type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Group</button>
+                    </p>
+
+
+                    <div ng-repeat="(i,grp) in groups track by $index" class="input-group expGroup">
+                        <span class="input-group-addon">Group {{$index+1}}</span>
+                        <input  ng-model="groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;
+                        <span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>
                     </div>
+
+
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input ng-click="createCohort()" type="submit" class="btn btn-primary" data-dismiss="modal" value="Create Cohort">
+                    <button type="button" ng-click= "resetNewCohortForm()" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button ng-disabled="newCohort.$invalid" type="submit" class="btn btn-primary" data-dismiss="modal">Create Cohort</button>
                 </div>
             </form>
         </div>

@@ -55,22 +55,36 @@ function DashboardCtrl ($scope, $cookies) {
 
     $scope.openCohort = false;
 
+    $scope.groups = [];
+
+    $scope.addGroup = function (idx) {
+        $scope.groups.push ("");
+    }
+    $scope.removeGroup = function (idx) {
+        console.log($scope.groups[idx]);
+        $scope.groups.splice(idx,1);
+
+    }
+
+    $scope.resetNewCohortForm = function () {
+
+        $scope.cname = "";
+        $scope.nflies = "";
+        $scope.groups = [];
+
+    }
 
 
     $scope.createCohort = function() {
 
-//        $scope.cname = "";
-//        $scope.nflies = "";
-//        $scope.ngroups = "";
         $scope.openCohort = true;
         $scope.cohortName = $scope.cname;
-        $scope.noOfGroups = $scope.ngroups;
         $scope.noOfFlies = $scope.nflies;
         $scope.msg = "you've opened a new cohort";
+
+        $scope.resetNewCohortForm();
     }
 
-
-     //$scope.$apply();
 }
 function LoginCtrl($scope, $cookies) {
     //alert("login ctrl");
