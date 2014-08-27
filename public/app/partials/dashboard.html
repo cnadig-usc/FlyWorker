@@ -9,7 +9,8 @@
             <div class="list-group">
                 <ul> <!-- this ul is here only to push the list items to the right. with li, the hover thing doens't work! :( -->
                     <a class="list-group-item active" style="color:white;"> ... </a>
-                    <a data-toggle="modal" data-target=".bs-example-modal-sm" class="list-group-item">Track new cohort</a>
+                    <!--<a data-toggle="modal" data-target=".bs-example-modal-sm" class="list-group-item">Track new cohort</a>-->
+                    <a class="list-group-item" ng-click="openNewCohortForm()">Track New Cohort</a>
                     <a class="list-group-item">Continue tracking </a>
                 </ul>
 
@@ -21,64 +22,101 @@
                     <h1>{{cohortName}} <small>{{msg}}</small></h1>
                 </div>
             </div>
+
             <div class="row">
                 <div class="table-responsive">
                     <table class="table table-bordered videoTable">
+                        <tr ng-repeat="videos in videoGrid">
+                            <td ng-repeat="video in videos"><video-element names="{{video}}"></video-element> </td>
 
-                        <tr>
-                            <td><video-element names="Chai"></video-element></td>
-                            <td><video-element names="Nadig"></video-element></td>
                         </tr>
                     </table>
                 </div>
 
+
             </div>
+            <!--<div class="row">-->
+                <!--<div class="table-responsive">-->
+                    <!--<table class="table table-bordered videoTable">-->
+
+                        <!--<tr>-->
+                            <!--<td><video-element names="Chai"></video-element></td>-->
+                            <!--<td><video-element names="Nadig"></video-element></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</div>-->
+
+            <!--</div>-->
         </div>
     </div>
 </div>
 
-
-
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <form name="newCohort" ng-submit="createCohort()">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Cohort Details</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group">
-                        <span class="input-group-addon">Cohort Name</span>
-                        <input ng-model="cname" type="text" class="form-control" style="width:150px" required>
-                        
-                        <span class="input-group-addon">Number of flies</span>
-                        <input ng-model="nflies" type="text" class="form-control" style="width:120px" required>
-                    </div>
-                    <br>
-                    <br>
-
-
-                    <p>
-                        <button ng-click="addGroup()" type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Group</button>
-                    </p>
-
-
-                    <div ng-repeat="(i,grp) in groups track by $index" class="input-group expGroup">
-                        <span class="input-group-addon">Group {{$index+1}}</span>
-                        <input  ng-model="groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;
-                        <span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>
-                    </div>
-
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" ng-click= "resetNewCohortForm()" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button ng-disabled="newCohort.$invalid" type="submit" class="btn btn-primary" data-dismiss="modal">Create Cohort</button>
-                </div>
-            </form>
-        </div>
+<script type="text/ng-template" id="newCohortForm.html">
+    <div class="modal-header">
+        <a ng-click="cancelNewCohortForm()" href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+        <h4 class="modal-title">Cohort Details</h4>
     </div>
-</div>
+    <div class="modal-body">
+        <div class="input-group">
+            <span class="input-group-addon">Cohort Name</span>
+            <input ng-model="data.cname" type="text" class="form-control" style="width:150px" required/>
+
+            <span class="input-group-addon">Number of vials</span>
+            <input ng-model="data.numvials" type="text" class="form-control" style="width:120px" required/>
+        </div>
+        <br>
+        <br>
+        <p>
+            <a ng-click="addGroup()"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Group</a>
+        </p>
+        <div ng-repeat="(i,grp) in data.groups track by $index" class="input-group expGroup">
+            <span class="input-group-addon">Group {{$index+1}}</span>
+            <input  ng-model="data.groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;
+            <span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="createNewCohort()">Create cohort</button>
+        <button class="btn btn-warning" ng-click="cancelNewCohortForm()">Cancel</button>
+    </div>
+
+</script>
+
+
+
+<!--<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">-->
+    <!--<div class="modal-dialog modal-sm">-->
+        <!--<div class="modal-content">-->
+            <!--<form name="newCohort" ng-submit="createCohort()" novalidate>-->
+                <!--<div class="modal-header">-->
+                    <!--<a ng-click="resetNewCohortForm()" href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>-->
+                    <!--<h4 class="modal-title">Cohort Details</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<div class="input-group">-->
+                        <!--<span class="input-group-addon">Cohort Name</span>-->
+                        <!--<input ng-model="cname" type="text" class="form-control" style="width:150px" required>-->
+
+                        <!--<span class="input-group-addon">Number of vials</span>-->
+                        <!--<input ng-model="nvials" type="text" class="form-control" style="width:120px" required>-->
+                    <!--</div>-->
+                    <!--<br>-->
+                    <!--<br>-->
+                    <!--<p>-->
+                        <!--<a ng-click="addGroup()"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Group</a>-->
+                    <!--</p>-->
+                    <!--<div ng-repeat="(i,grp) in groups track by $index" class="input-group expGroup">-->
+                        <!--<span class="input-group-addon">Group {{$index+1}}</span>-->
+                        <!--<input  ng-model="groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;-->
+                        <!--<span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<input type="submit"  class="btn btn-primary" data-dismiss="modal" ng-disabled="newCohort.$invalid" value="Create Cohort"/>-->
+                    <!--<button type="button" ng-click="resetNewCohortForm()" class="btn btn-default" data-dismiss="modal" >Close</button>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->

@@ -44,7 +44,7 @@ function MainController ($scope, $location, $cookies) {
         }
     $scope.setLoginNavigationBar();
 }
-function DashboardCtrl ($scope, $cookies) {
+function DashboardCtrl ($scope, $cookies, $modal, $log) {
     //alert('dbc ctrl');
     if ($cookies.VideoMunger) {
         //alert('cookie is set');
@@ -55,36 +55,87 @@ function DashboardCtrl ($scope, $cookies) {
 
     $scope.openCohort = false;
 
-    $scope.groups = [];
-
-    $scope.addGroup = function (idx) {
-        $scope.groups.push ("");
-    }
-    $scope.removeGroup = function (idx) {
-        console.log($scope.groups[idx]);
-        $scope.groups.splice(idx,1);
-
-    }
-
-    $scope.resetNewCohortForm = function () {
-
-        $scope.cname = "";
-        $scope.nflies = "";
-        $scope.groups = [];
-
-    }
+    $scope.cohortName='';
+    $scope.numvials='';
+    $scope.noOfGroups = 1;
+    $scope.videoGrid = [[]];
 
 
-    $scope.createCohort = function() {
 
+     $scope.openNewCohortForm = function () {
+             var modalInstance = $modal.open({
+                 templateUrl:'newCohortForm.html',
+                 controller:NewCohortFormCtrl
+             });
+
+             //new cohort form close
+             modalInstance.result.then($scope.createCohort, function (err) {
+
+             });
+         };
+
+
+
+    $scope.createCohort= function(result) {
+        console.log('create Cohort');
         $scope.openCohort = true;
-        $scope.cohortName = $scope.cname;
-        $scope.noOfFlies = $scope.nflies;
-        $scope.msg = "you've opened a new cohort";
+        $scope.cohortName = result.cname;
+        $scope.noOfvials = result.nvials;
+        $scope.groups = result.groups;
 
-        $scope.resetNewCohortForm();
+        $scope.noOfGroups = $scope.groups.length | 1;
+        console.log($scope.groups);
+        console.log($scope.noOfGroups);
+        $scope.msg = "you've created a new cohort";
+
+
+        if ($scope.groups.length != 0) {
+            for (var i =0; i < $scope.noOfvials / $scope.noOfGroups ; i ++ ) {
+                        $scope.videoGrid[i] = [];
+                        for (var j =0; j < $scope.groups.length; j++) {
+                            $scope.videoGrid[i][j] = 'Group-'+$scope.groups[j]+'-Video-'+(i+1);
+                        }
+                    }
+        } else {
+            for (var i=0; i <$scope.noOfvials ; i++) {
+                $scope.videoGrid[i] = [];
+                for (var j=0; j < 1; j++) {
+                    $scope.videoGrid[i][j] = 'Video-'+(i+1);
+                }
+            }
+
+        }
+
+        console.log($scope.videoGrid);
     }
 
+}
+function NewCohortFormCtrl($scope,$modalInstance) {
+
+    $scope.data = {
+        cname :"",
+        numvials:"",
+        groups:[]
+    }
+
+    $scope.createNewCohort = function () {
+        $modalInstance.close({cname:$scope.data.cname,nvials:$scope.data.numvials, groups:$scope.data.groups});
+    };
+
+
+    $scope.cancelNewCohortForm = function () {
+        $modalInstance.dismiss('cancel');
+    }
+
+     $scope.addGroup = function (idx) {
+            $scope.data.groups.push ("");
+            console.log($scope.data.groups.length);
+                    console.log($scope.data.groups);
+        }
+
+     $scope.removeGroup = function (idx) {
+             $scope.data.groups.splice(idx,1);
+         }
 }
 function LoginCtrl($scope, $cookies) {
     //alert("login ctrl");
