@@ -44,7 +44,7 @@ function MainController ($scope, $location, $cookies) {
         }
     $scope.setLoginNavigationBar();
 }
-function DashboardCtrl ($scope, $cookies, $modal, $log) {
+function DashboardCtrl ($scope, $cookies, $modal, $upload) {
     //alert('dbc ctrl');
     if ($cookies.VideoMunger) {
         //alert('cookie is set');
@@ -60,8 +60,6 @@ function DashboardCtrl ($scope, $cookies, $modal, $log) {
     $scope.noOfGroups = 1;
     $scope.videoGrid = [[]];
 
-
-
      $scope.openNewCohortForm = function () {
              var modalInstance = $modal.open({
                  templateUrl:'newCohortForm.html',
@@ -73,8 +71,6 @@ function DashboardCtrl ($scope, $cookies, $modal, $log) {
 
              });
          };
-
-
 
     $scope.createCohort= function(result) {
         console.log('create Cohort');
@@ -105,9 +101,10 @@ function DashboardCtrl ($scope, $cookies, $modal, $log) {
             }
 
         }
-
         console.log($scope.videoGrid);
     }
+
+    $scope.createCohort ({cname:'Test',nvials:10,groups:['M','V']});
 
 }
 function NewCohortFormCtrl($scope,$modalInstance) {

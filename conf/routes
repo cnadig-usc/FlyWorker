@@ -15,6 +15,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET     /*any                       controllers.Application.index(any)
 
-POST    /authenticate                 controllers.Application.authenticate()
+POST    /authenticate               controllers.Application.authenticate()
 
 

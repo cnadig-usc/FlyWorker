@@ -11,3 +11,7 @@
 .expGroup {
     margin:10px;
 }
+
+.videoName {
+    cursor:pointer;
+}

@@ -1,5 +1,8 @@
-<h4>
-    <span>
-        <span style="color:red;" class="glyphicon glyphicon-facetime-video"></span> {{videoName}}
-    </span>
-</h4>
+<div>
+    <div>
+        <h4 class="videoName" ng-click="openVideoUploader()" >
+            <span class="glyphicon glyphicon-facetime-video"></span> {{videoName}}
+        </h4>
+        <div style='display:none'><input id="{{videoName}}" type="file" ng-file-select="onFileSelect($files)" accept="video/avi"/></div>
+    </div>
+</div>
