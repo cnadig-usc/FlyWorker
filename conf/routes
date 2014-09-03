@@ -17,4 +17,4 @@ GET     /*any                       controllers.Application.index(any)
 
 POST    /authenticate               controllers.Application.authenticate()
 
-
+POST    /videoUpload                controllers.Application.videoUpload()

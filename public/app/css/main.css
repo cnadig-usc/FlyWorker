@@ -14,4 +14,25 @@
 
 .videoName {
     cursor:pointer;
+    height: 33px;
+}
+.videoGlyphicon {
+    margin-left:8px;
+    margin-top:6px;
+    margin-right:4px;
+}
+.noVideo {
+    color:black;
+}
+.videoUploadError {
+    color:red;
+}
+.videoUploadSuccess {
+    color:green;
+}
+.videoUploadingGif {
+    background-image: url('/assets/images/ajax-loader.gif');
+    background-repeat:no-repeat;
+    background-size:33px 33px;
+
 }

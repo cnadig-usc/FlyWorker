@@ -1,7 +1,7 @@
 <div>
     <div>
-        <h4 class="videoName" ng-click="openVideoUploader()" >
-            <span class="glyphicon glyphicon-facetime-video"></span> {{videoName}}
+        <h4 class="videoName" ng-click="openVideoUploader()" ng-class="{videoUploadingGif : vidstatus=='uploading'}">
+            <span class="glyphicon glyphicon-facetime-video videoGlyphicon"  ng-class="{noVideo: vidstatus=='novideo', videoUploadError:vidstatus=='error', videoUploadSuccess:vidstatus=='success'}"></span> {{videoName}}
         </h4>
         <div style='display:none'><input id="{{videoName}}" type="file" ng-file-select="onFileSelect($files)" accept="video/avi"/></div>
     </div>

@@ -8,6 +8,7 @@ libraryDependencies ++= Seq(
   cache,
   javaEbean,
   "commons-io" % "commons-io" % "1.3.2",
+  "org.apache.directory.studio" % "org.apache.commons.io" % "2.4",
   "com.google.code.gson" % "gson" % "2.2",
   "org.codehaus.jackson" % "jackson-core-asl" % "1.9.13",
   "org.hibernate" % "hibernate-core" % "4.3.0.CR1",

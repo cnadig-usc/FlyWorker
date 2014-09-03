@@ -80,8 +80,8 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
         $scope.groups = result.groups;
 
         $scope.noOfGroups = $scope.groups.length | 1;
-        console.log($scope.groups);
-        console.log($scope.noOfGroups);
+//        console.log($scope.groups);
+//        console.log($scope.noOfGroups);
         $scope.msg = "you've created a new cohort";
 
 
@@ -101,7 +101,7 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
             }
 
         }
-        console.log($scope.videoGrid);
+//        console.log($scope.videoGrid);
     }
 
     $scope.createCohort ({cname:'Test',nvials:10,groups:['M','V']});
