@@ -48,6 +48,8 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
     //alert('dbc ctrl');
     if ($cookies.VideoMunger) {
         //alert('cookie is set');
+        $scope.login = $cookies["VideoMunger"];
+        console.log($cookies);
         $scope.setDashboardNavigationBar();
     } else {
         $scope.goToRoot();
@@ -73,35 +75,57 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
          };
 
     $scope.createCohort= function(result) {
-        console.log('create Cohort');
-        $scope.openCohort = true;
-        $scope.cohortName = result.cname;
-        $scope.noOfvials = result.nvials;
-        $scope.groups = result.groups;
-
-        $scope.noOfGroups = $scope.groups.length | 1;
-//        console.log($scope.groups);
-//        console.log($scope.noOfGroups);
-        $scope.msg = "you've created a new cohort";
+        console.log($scope.login);
+        console.log('create Cohort '+JSON.stringify({
+                                                     "cohort_name":result.cname,
+                                                     "experiment_id":1,
+                                                     "created_by_user":$scope.login,
+                                                     "no_of_vials":result.nvials,
+                                                     "no_of_groups":result.groups.length | 1
+                                                 }));
 
 
-        if ($scope.groups.length != 0) {
-            for (var i =0; i < $scope.noOfvials / $scope.noOfGroups ; i ++ ) {
-                        $scope.videoGrid[i] = [];
-                        for (var j =0; j < $scope.groups.length; j++) {
-                            $scope.videoGrid[i][j] = 'Group-'+$scope.groups[j]+'-Video-'+(i+1);
-                        }
+        $.ajax({
+            url:"/createCohort",
+            type:"POST",
+            data: JSON.stringify({
+                "cohort_name":result.cname,
+                "experiment_id":1,
+                "created_by_user":$scope.login,
+                "no_of_vials":result.nvials,
+                "no_of_groups":result.groups.length | 1
+            }),
+            contentType: "application/json; charset=utf-8"
+        }).success(function(data,textStatus, jqXHR) {
+
+            $scope.openCohort = true;
+            $scope.cohortName = result.cname;
+            $scope.noOfvials = result.nvials;
+            $scope.groups = result.groups;
+            $scope.noOfGroups = $scope.groups.length | 1;
+
+            $scope.msg = "you've created a new cohort";
+
+
+            if ($scope.groups.length != 0) {
+                for (var i =0; i < $scope.noOfvials / $scope.noOfGroups ; i ++ ) {
+                    $scope.videoGrid[i] = [];
+                    for (var j =0; j < $scope.groups.length; j++) {
+                        $scope.videoGrid[i][j] = 'Group-'+$scope.groups[j]+'-Video-'+(i+1);
                     }
-        } else {
-            for (var i=0; i <$scope.noOfvials ; i++) {
-                $scope.videoGrid[i] = [];
-                for (var j=0; j < 1; j++) {
-                    $scope.videoGrid[i][j] = 'Video-'+(i+1);
                 }
-            }
+            } else {
+                for (var i=0; i <$scope.noOfvials ; i++) {
+                    $scope.videoGrid[i] = [];
+                    for (var j=0; j < 1; j++) {
+                            $scope.videoGrid[i][j] = 'Video-'+(i+1);
+                    }
+                }
 
-        }
-//        console.log($scope.videoGrid);
+            }
+        }).error(function(jqXHR,textStatus,errorThrown){
+            console.log('error');
+        });
     }
 
 //    $scope.createCohort ({cname:'Test',nvials:10,groups:['M','V']});
@@ -140,7 +164,7 @@ function LoginCtrl($scope, $cookies) {
         $scope.goToDashboard($scope.login);
         //alert($scope.login);
     } 
-    $scope.open = function()  {
+    $scope.loggIn = function()  {
         $.ajax ({
             url: "/authenticate",
             type: "POST",

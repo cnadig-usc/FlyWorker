@@ -3,8 +3,10 @@ package controllers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import constants.AppConstant;
+import handlers.AccountHandler;
+import handlers.CohortHandler;
 import message.Message;
-import models.handlers.AccountHandler;
 import org.apache.commons.io.FileUtils;
 import play.Play;
 import play.mvc.Controller;
@@ -13,7 +15,8 @@ import play.mvc.Result;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Application extends Controller {
@@ -73,7 +76,7 @@ public class Application extends Controller {
         // here I have formData=null, in case of a huge file
         final Http.MultipartFormData.FilePart filePart = formData.getFiles().get(0);
 
-        System.out.println(filePart.getFilename());
+        System.out.println(filePart.getFilename()); //yay
         System.out.println(filePart.getContentType());
         System.out.println(filePart.getFilename().indexOf(".avi"));
         System.out.println(filePart.getFilename().length());
@@ -104,7 +107,24 @@ public class Application extends Controller {
 
     }
 
+    public static Result createCohort () {
 
+        JsonObject json = (JsonObject) new JsonParser().parse(request().body().asJson().toString());
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put(AppConstant.COHORT_NAME, json.get(AppConstant.COHORT_NAME).getAsString());
+        params.put(AppConstant.CREATED_BY_USER, json.get(AppConstant.CREATED_BY_USER).getAsString());
+        params.put(AppConstant.EXPERIMENT_ID,json.get(AppConstant.EXPERIMENT_ID).getAsString());
+        params.put(AppConstant.NO_OF_GROUPS, json.get(AppConstant.NO_OF_GROUPS).getAsString());
+        params.put(AppConstant.NO_OF_VIALS,json.get(AppConstant.NO_OF_VIALS).getAsString());
+
+        CohortHandler.createCohort(params);
+
+        return ok("done!");
+
+
+    }
 
 //    def getURI(any: String): String = any match {
 //        case "main" => "/public/html/main.html"

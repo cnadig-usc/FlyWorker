@@ -27,6 +27,8 @@ public class Cohort {
 
     private Long experiment_id;
 
+
+
     private Experiment experiment;
 
     private Timestamp created_timestamp;
@@ -39,6 +41,9 @@ public class Cohort {
         this.created_by_user = created_by_user;
     }
 
+    public void setExperiment(Experiment experiment) {
+        this.experiment = experiment;
+    }
 
     @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="experiment_id")

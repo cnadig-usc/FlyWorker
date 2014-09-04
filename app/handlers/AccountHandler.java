@@ -1,4 +1,4 @@
-package models.handlers;
+package handlers;
 
 import com.avaje.ebean.Ebean;
 import message.Message;
