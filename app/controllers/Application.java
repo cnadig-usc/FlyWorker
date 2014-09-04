@@ -4,7 +4,7 @@ package controllers;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import message.Message;
-import models.AccountHandler;
+import models.handlers.AccountHandler;
 import org.apache.commons.io.FileUtils;
 import play.Play;
 import play.mvc.Controller;

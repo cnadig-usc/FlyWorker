@@ -1,7 +1,8 @@
-package models;
+package models.handlers;
 
 import com.avaje.ebean.Ebean;
 import message.Message;
+import models.Account;
 
 import java.util.List;
 
@@ -37,8 +38,4 @@ public class AccountHandler {
 
 
     }
-
-
-
-
 }

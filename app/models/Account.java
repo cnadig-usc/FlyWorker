@@ -1,15 +1,19 @@
 package models;
 
-import play.db.ebean.Model;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.sql.Timestamp;
 
 /**
  * Created by johntower on 2/11/14.
  */
 @Entity
+@Table(
+        name="account",
+        uniqueConstraints = @UniqueConstraint(columnNames={"username"})
+)
 public class Account {
 
     @Id

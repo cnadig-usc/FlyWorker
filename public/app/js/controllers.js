@@ -104,7 +104,7 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
 //        console.log($scope.videoGrid);
     }
 
-    $scope.createCohort ({cname:'Test',nvials:10,groups:['M','V']});
+//    $scope.createCohort ({cname:'Test',nvials:10,groups:['M','V']});
 
 }
 function NewCohortFormCtrl($scope,$modalInstance) {
