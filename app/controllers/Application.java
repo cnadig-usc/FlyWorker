@@ -4,6 +4,7 @@ package controllers;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import constants.AppConstant;
+import exceptions.VideoMungerException;
 import handlers.AccountHandler;
 import handlers.CohortHandler;
 import message.Message;
@@ -119,9 +120,15 @@ public class Application extends Controller {
         params.put(AppConstant.NO_OF_GROUPS, json.get(AppConstant.NO_OF_GROUPS).getAsString());
         params.put(AppConstant.NO_OF_VIALS,json.get(AppConstant.NO_OF_VIALS).getAsString());
 
-        CohortHandler.createCohort(params);
+        Long cohort_id = null;
 
-        return ok("done!");
+        try {
+            cohort_id = CohortHandler.createCohort(params);
+        } catch (VideoMungerException e) {
+            return forbidden(e.getMessage());
+        }
+
+        return ok("{\"cohort_id\":\""+cohort_id.toString()+"\"}");
 
 
     }

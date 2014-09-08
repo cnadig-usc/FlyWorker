@@ -49,7 +49,14 @@
 
             <span class="input-group-addon">Number of vials</span>
             <input ng-model="data.numvials" type="text" class="form-control" style="width:120px" required/>
+
         </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">Experiment</span>
+            <input ng-model="data.exp" type="text" class="form-control" style="width:150px" required/>
+        </div>
+
         <br>
         <br>
         <p>
@@ -60,6 +67,8 @@
             <input  ng-model="data.groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;
             <span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>
         </div>
+
+        <alert ng-repeat="alert in newCohortAlerts" type="alert.type" close="closeNewCohortAlert($index)">{{alert.msg}}</alert>
 
     </div>
     <div class="modal-footer">

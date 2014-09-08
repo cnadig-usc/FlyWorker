@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -13,46 +15,35 @@ public class Cohort {
     @Id
     private Long cohort_id;
 
+    @Column(nullable = false)
     private String cohort_name;
 
-    private String created_by_user;
-
+    @ManyToOne(fetch= FetchType.EAGER, optional = false)
     private Account created_by_account;
 
+    @Column(nullable = false)
     private int number_of_vials;
 
+    @Column(nullable = false)
     private int number_of_groups;
 
+    @Column(nullable = false)
     private String status;
 
-    private Long experiment_id;
-
-
-
+    @ManyToOne(fetch= FetchType.EAGER, optional = false)
     private Experiment experiment;
 
+    @CreatedTimestamp
     private Timestamp created_timestamp;
-
-    public String getCreated_by_user() {
-        return created_by_user;
-    }
-
-    public void setCreated_by_user(String created_by_user) {
-        this.created_by_user = created_by_user;
-    }
 
     public void setExperiment(Experiment experiment) {
         this.experiment = experiment;
     }
 
-    @ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name="experiment_id")
     public Experiment getExperiment() {
         return experiment;
     }
 
-    @ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name="created_by_user", referencedColumnName="username")
     public Account getCreated_by_account () {
         return created_by_account;
     }
@@ -75,10 +66,6 @@ public class Cohort {
 
     public String getStatus() {
         return status;
-    }
-
-    public Long getExperiment_id() {
-        return experiment_id;
     }
 
     public Timestamp getCreated_timestamp() {
@@ -105,14 +92,11 @@ public class Cohort {
         this.status = status;
     }
 
-    public void setExperiment_id(Long experiment_id) {
-        this.experiment_id = experiment_id;
-    }
-
     public void setCreated_timestamp(Timestamp created_timestamp) {
         this.created_timestamp = created_timestamp;
     }
 
-
-
+    public void setCreated_by_account(Account created_by_account) {
+        this.created_by_account = created_by_account;
+    }
 }

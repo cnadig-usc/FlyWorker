@@ -78,7 +78,7 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
         console.log($scope.login);
         console.log('create Cohort '+JSON.stringify({
                                                      "cohort_name":result.cname,
-                                                     "experiment_id":1,
+                                                     "experiment_id":result.exp,
                                                      "created_by_user":$scope.login,
                                                      "no_of_vials":result.nvials,
                                                      "no_of_groups":result.groups.length | 1
@@ -90,7 +90,7 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
             type:"POST",
             data: JSON.stringify({
                 "cohort_name":result.cname,
-                "experiment_id":1,
+                "experiment_id":result.exp,
                 "created_by_user":$scope.login,
                 "no_of_vials":result.nvials,
                 "no_of_groups":result.groups.length | 1
@@ -98,6 +98,7 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
             contentType: "application/json; charset=utf-8"
         }).success(function(data,textStatus, jqXHR) {
 
+            console.log(data);
             $scope.openCohort = true;
             $scope.cohortName = result.cname;
             $scope.noOfvials = result.nvials;
@@ -124,6 +125,9 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
 
             }
         }).error(function(jqXHR,textStatus,errorThrown){
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
             console.log('error');
         });
     }
@@ -136,11 +140,21 @@ function NewCohortFormCtrl($scope,$modalInstance) {
     $scope.data = {
         cname :"",
         numvials:"",
-        groups:[]
+        groups:[],
+        exp:""
     }
 
+    $scope.newCohortAlerts =  [
+//                                 { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+//                                 { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+                               ];
+
+    $scope.closeNewCohortAlert = function(index) {
+        $scope.newCohortAlerts.splice(index, 1);
+      };
+
     $scope.createNewCohort = function () {
-        $modalInstance.close({cname:$scope.data.cname,nvials:$scope.data.numvials, groups:$scope.data.groups});
+        $modalInstance.close({cname:$scope.data.cname,nvials:$scope.data.numvials, groups:$scope.data.groups, exp:$scope.data.exp});
     };
 
 
@@ -150,8 +164,8 @@ function NewCohortFormCtrl($scope,$modalInstance) {
 
      $scope.addGroup = function (idx) {
             $scope.data.groups.push ("");
-            console.log($scope.data.groups.length);
-                    console.log($scope.data.groups);
+//            console.log($scope.data.groups.length);
+//                    console.log($scope.data.groups);
         }
 
      $scope.removeGroup = function (idx) {

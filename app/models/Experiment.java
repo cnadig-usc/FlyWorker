@@ -1,9 +1,6 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 /**
  * Created by johntower on 9/4/14.
@@ -18,6 +15,7 @@ public class Experiment {
     @Id
     private Long experiment_id;
 
+    @Column(nullable = false)
     private String experiment_name;
 
     public Long getExperiment_id() {

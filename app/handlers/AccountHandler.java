@@ -38,4 +38,14 @@ public class AccountHandler {
 
 
     }
+
+    public static Account findAccount(String username) {
+
+        Account account = Ebean.find(Account.class)
+                .where()
+                .eq("username",username)
+                .findUnique();
+        return account;
+    }
+
 }

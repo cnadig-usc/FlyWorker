@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -14,13 +16,15 @@ public class Video {
     @Id
     private Long video_id;
 
+    @Column(nullable = false)
     private String video_name;
 
-    private Long cohort_id;
-
+    @ManyToOne(fetch= FetchType.EAGER , optional = false)
     private Cohort cohort;
 
+    @CreatedTimestamp
     private Timestamp uploaded_timestap;
+
 
     String video_blob;
 
@@ -40,16 +44,6 @@ public class Video {
         this.video_name = video_name;
     }
 
-    public Long getCohort_id() {
-        return cohort_id;
-    }
-
-    public void setCohort_id(Long cohort_id) {
-        this.cohort_id = cohort_id;
-    }
-
-    @ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name="cohort_id", referencedColumnName = "cohort_id")
     public Cohort getCohort() {
         return cohort;
     }

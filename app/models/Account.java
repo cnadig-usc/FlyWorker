@@ -1,9 +1,8 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import com.avaje.ebean.annotation.CreatedTimestamp;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -43,10 +42,17 @@ public class Account {
         this.password = password;
     }
 
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
+    @CreatedTimestamp
     Timestamp created_timestamp;
 
 
