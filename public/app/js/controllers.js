@@ -2,8 +2,10 @@
 function MainController ($scope, $location, $cookies) {
     $scope.msg = "No cohort open";
     $scope.goToDashboard = function(login) {
+
         $scope.login = login;
         $location.path('/dashboard');
+
     }
     $scope.setLoginNavigationBar = function () {
         $scope.navigationBar = [
@@ -63,9 +65,16 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
     $scope.videoGrid = [[]];
 
      $scope.openNewCohortForm = function () {
+
+        console.log('openNewcohortorm'+$scope.login);
              var modalInstance = $modal.open({
                  templateUrl:'newCohortForm.html',
-                 controller:NewCohortFormCtrl
+                 controller:NewCohortFormCtrl,
+                 resolve: {
+                    login: function () {
+                        return $scope.login;
+                    }
+                 }
              });
 
              //new cohort form close
@@ -75,73 +84,48 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
          };
 
     $scope.createCohort= function(result) {
-        console.log($scope.login);
-        console.log('create Cohort '+JSON.stringify({
-                                                     "cohort_name":result.cname,
-                                                     "experiment_id":result.exp,
-                                                     "created_by_user":$scope.login,
-                                                     "no_of_vials":result.nvials,
-                                                     "no_of_groups":result.groups.length | 1
-                                                 }));
+        console.log(result);
+                            $scope.openCohort = true;
+                            $scope.cohortName = result.cname;
+                            $scope.noOfvials = result.nvials;
+                            $scope.groups = result.groups;
+                            $scope.noOfGroups = $scope.groups.length | 1;
+                            $scope.noOfCams = result.noOfCams | 2;
+
+                            $scope.msg = "you've created a new cohort";
 
 
-        $.ajax({
-            url:"/createCohort",
-            type:"POST",
-            data: JSON.stringify({
-                "cohort_name":result.cname,
-                "experiment_id":result.exp,
-                "created_by_user":$scope.login,
-                "no_of_vials":result.nvials,
-                "no_of_groups":result.groups.length | 1
-            }),
-            contentType: "application/json; charset=utf-8"
-        }).success(function(data,textStatus, jqXHR) {
+                            if ($scope.groups.length != 0) {
+                                for (var i =0; i < $scope.noOfvials / $scope.noOfGroups ; i ++ ) {
+                                    $scope.videoGrid[i] = [];
+                                    for (var j =0; j < $scope.groups.length; j++) {
+                                        $scope.videoGrid[i][j] = 'Group-'+$scope.groups[j]+'-Video-'+(i+1);
+                                    }
+                                }
+                            } else {
+                                for (var i=0; i <$scope.noOfvials ; i++) {
+                                    $scope.videoGrid[i] = [];
+                                    for (var j=0; j < 1; j++) {
+                                            $scope.videoGrid[i][j] = 'Video-'+(i+1);
+                                    }
+                                }
 
-            console.log(data);
-            $scope.openCohort = true;
-            $scope.cohortName = result.cname;
-            $scope.noOfvials = result.nvials;
-            $scope.groups = result.groups;
-            $scope.noOfGroups = $scope.groups.length | 1;
-
-            $scope.msg = "you've created a new cohort";
-
-
-            if ($scope.groups.length != 0) {
-                for (var i =0; i < $scope.noOfvials / $scope.noOfGroups ; i ++ ) {
-                    $scope.videoGrid[i] = [];
-                    for (var j =0; j < $scope.groups.length; j++) {
-                        $scope.videoGrid[i][j] = 'Group-'+$scope.groups[j]+'-Video-'+(i+1);
-                    }
-                }
-            } else {
-                for (var i=0; i <$scope.noOfvials ; i++) {
-                    $scope.videoGrid[i] = [];
-                    for (var j=0; j < 1; j++) {
-                            $scope.videoGrid[i][j] = 'Video-'+(i+1);
-                    }
-                }
-
-            }
-        }).error(function(jqXHR,textStatus,errorThrown){
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-            console.log('error');
-        });
+                            }
     }
 
 //    $scope.createCohort ({cname:'Test',nvials:10,groups:['M','V']});
 
 }
-function NewCohortFormCtrl($scope,$modalInstance) {
+function NewCohortFormCtrl($scope,$modalInstance,login) {
 
+
+    $scope.login = login;
     $scope.data = {
         cname :"",
         numvials:"",
         groups:[],
-        exp:""
+        exp:"",
+        noOfCams:2
     }
 
     $scope.newCohortAlerts =  [
@@ -153,8 +137,62 @@ function NewCohortFormCtrl($scope,$modalInstance) {
         $scope.newCohortAlerts.splice(index, 1);
       };
 
+
+    $scope.addNewCohortAlert = function (obj) {
+
+
+        $scope.$apply(function () {
+
+            $scope.newCohortAlerts.push(obj);
+        });
+    }
+
     $scope.createNewCohort = function () {
-        $modalInstance.close({cname:$scope.data.cname,nvials:$scope.data.numvials, groups:$scope.data.groups, exp:$scope.data.exp});
+
+
+        console.log($scope.login);
+
+
+                console.log('create Cohort '+JSON.stringify({
+                                                             "cohort_name":$scope.data.cname,
+                                                             "experiment_id":$scope.data.exp,
+                                                             "created_by_user":$scope.login,
+                                                             "no_of_vials":$scope.data.numvials,
+                                                             "no_of_groups":$scope.data.groups.length | 1,
+                                                             "no_of_cams":$scope.data.noOfCams | 2
+                                                         }));
+
+
+                $.ajax({
+                    url:"/createCohort",
+                    type:"POST",
+                    data: JSON.stringify({
+                        "cohort_name":$scope.data.cname,
+                        "experiment_id":$scope.data.exp,
+                        "created_by_user":$scope.login,
+                        "no_of_vials":$scope.data.numvials,
+                        "no_of_groups":$scope.data.groups.length | 1,
+                        "no_of_cams":$scope.data.noOfCams | 2
+                    }),
+                    contentType: "application/json; charset=utf-8"
+                }).success(function(data,textStatus, jqXHR) {
+                    console.log('noOfCams: '+$scope.data.noOfCams);
+                     $modalInstance.close({cname:$scope.data.cname,nvials:$scope.data.numvials, groups:$scope.data.groups, exp:$scope.data.exp, noOfCams:$scope.data.noOfCams});
+
+
+                }).error(function(jqXHR,textStatus,errorThrown){
+
+                    var al = {type:'danger'};
+                    al['msg'] = jqXHR.responseText.length > 100 ? jqXHR.statusText : jqXHR.responseText;
+
+                    $scope.addNewCohortAlert(al);
+
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    console.log('error');
+                });
+
     };
 
 

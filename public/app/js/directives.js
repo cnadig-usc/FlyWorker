@@ -4,7 +4,8 @@ angular.module('vmComponents', [] )
             restrict:'E',
 
             scope:{
-                videoName:'@name'
+                videoName:'@name',
+                no_of_cams:'@noofcams'
             },
             templateUrl: "/partials/videoelement",
             link: function (scope, elem, attrs) {
@@ -12,13 +13,21 @@ angular.module('vmComponents', [] )
             },
             controller: function ($scope,$upload) {
                 $scope.vidstatus = 'novideo';
-                $scope.openVideoUploader = function () {
-                    console.log($scope.videoName);
-                    document.getElementById($scope.videoName).click();
+
+                $scope.videoSetNames = []
+                for (var i =0; i<$scope.no_of_cams; i++) {
+                    $scope.videoSetNames.push($scope.videoName+'-cam-'+i.toString());
                 }
-                $scope.onFileSelect = function($files) {
+
+                $scope.openVideoUploader = function (vid) {
+                    console.log(vid);
+                    console.log($scope.no_of_cams);
+//                    document.getElementById(vid).click();
+                }
+                $scope.onFileSelect = function($files,vid) {
 
                     console.log($files);
+                    console.log(vid);
 
                     $scope.upload = $upload.upload({
                         url:'/videoUpload',

@@ -14,8 +14,7 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,8 +128,38 @@ public class Application extends Controller {
         }
 
         return ok("{\"cohort_id\":\""+cohort_id.toString()+"\"}");
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+        System.out.println("testing");
 
 
+
+        String [] cmd = {"/Users/johntower/Videomunger/app/controllers/FluorescoreCMD", "/Users/johntower/Videomunger/app/controllers/AviFileChunk1_View0.avi", "25",
+                "/Users/johntower/Videomunger/app/controllers/AviFileChunk1_View1.avi", "25", "n", "-1"};
+
+        ProcessBuilder builder = new ProcessBuilder(cmd);
+
+        Map<String,String> environ = builder.environment();
+        final Process process = builder.start();
+        InputStream is = process.getInputStream();
+        InputStreamReader isr =  new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+
+        String line;
+        while ((line=br.readLine())!=null) {
+
+            System.out.println(line);
+        }
+        System.out.println("Program terminated");
+
+
+//        try {
+//            Runtime.getRuntime().exec(cmd);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 //    def getURI(any: String): String = any match {
