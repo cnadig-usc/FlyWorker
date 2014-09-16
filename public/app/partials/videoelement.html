@@ -1,8 +1,16 @@
 <div>
     <div>
-        <span ng-repeat="vid in videoSetNames" class="videoName" ng-click="openVideoUploader(vid)" ng-class="{videoUploadingGif : vidstatus=='uploading'}">
-            <span class="glyphicon glyphicon-facetime-video videoGlyphicon"  ng-class="{noVideo: vidstatus=='novideo', videoUploadError:vidstatus=='error', videoUploadSuccess:vidstatus=='success'}"></span> |
-            <input style='display:none' id="{{vid}}" type="file" ng-file-select="onFileSelect($files, vid)" accept="video/avi"/>
-        </span> {{videoName}}
+        <div ng-repeat="vid in videoSetNames"
+             ng-init="vidstatus='novideo'"
+             class="videoDiv"
+             ng-click="openVideoUploader(vid)"
+             ng-class="{videoUploadingGif : videoStatuses[vid]=='uploading'}" >
+
+                <span class="glyphicon glyphicon-facetime-video videoGlyphicon"  ng-class="{noVideo: videoStatuses[vid]=='novideo', videoUploadError:videoStatuses[vid]=='error', videoUploadSuccess:videoStatuses[vid]=='success'}"></span> &nbsp;&nbsp;|
+                <input style='display:none' id="{{vid}}" type="file" ng-file-select="onFileSelect($files, vid, $index)" accept="video/avi"/>
+
+        </div>
+        <span class="videoName ">{{videoName}}</span>
+
     </div>
 </div>

@@ -42,7 +42,7 @@ public class CohortHandler {
 
         } catch (PersistenceException e) {
             if (e.getMessage().contains("Duplicate entry")) {
-                throw new VideoMungerException("Cohort with the name :"+params.get(AppConstant.COHORT_NAME)+" exists.");
+                throw new VideoMungerException("Cohort with the name '"+params.get(AppConstant.COHORT_NAME)+"' exists.");
             }
         } catch (NullPointerException e) {
             if (account == null) {
@@ -57,4 +57,12 @@ public class CohortHandler {
         }
         return null;
     }
+    public static Cohort findCohort (Long cohort_id) {
+        Cohort cohort = Ebean.find(Cohort.class)
+                .where()
+                .eq("cohort_id", cohort_id)
+                .findUnique();
+        return cohort;
+    }
+
 }

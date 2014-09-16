@@ -6,12 +6,12 @@
     <div class="row">
         <br>
         <div class="col-md-4">
-            <div class="list-group">
+            <div class="list-group_name">
                 <ul> <!-- this ul is here only to push the list items to the right. with li, the hover thing doens't work! :( -->
-                    <a class="list-group-item active" style="color:white;"> ... </a>
-                    <!--<a data-toggle="modal" data-target=".bs-example-modal-sm" class="list-group-item">Track new cohort</a>-->
-                    <a class="list-group-item" ng-click="openNewCohortForm()">Track New Cohort</a>
-                    <a class="list-group-item">Continue tracking </a>
+                    <a class="list-group_name-item active" style="color:white;"> ... </a>
+                    <!--<a data-toggle="modal" data-target=".bs-example-modal-sm" class="list-group_name-item">Track new cohort</a>-->
+                    <a class="list-group_name-item" ng-click="openNewCohortForm()">Track New Cohort</a>
+                    <a class="list-group_name-item">Continue tracking </a>
                 </ul>
 
             </div>
@@ -27,8 +27,9 @@
                 <div class="table-responsive">
                     <table class="table table-bordered videoTable">
                         <tr ng-repeat="videos in videoGrid">
-                            <td ng-repeat="video in videos"><video-element name="{{video}}" noofcams="{{noOfCams}}"></video-element> </td>
-
+                            <td ng-repeat="video in videos">
+                                    <video-element name="{{video.name}}" group_name="{{video.group_name}}" noofcams="{{noOfCams}}" loginUser="getLoginUser()" cohortid="getCohortId()"></video-element>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -43,17 +44,17 @@
         <h4 class="modal-title">Cohort Details</h4>
     </div>
     <div class="modal-body">
-        <div class="input-group">
-            <span class="input-group-addon">Cohort Name</span>
+        <div class="input-group_name">
+            <span class="input-group_name-addon">Cohort Name</span>
             <input ng-model="data.cname" type="text" class="form-control" style="width:150px" required/>
 
-            <span class="input-group-addon">Number of vials</span>
+            <span class="input-group_name-addon">Number of vials</span>
             <input ng-model="data.numvials" type="text" class="form-control" style="width:120px" required/>
 
         </div>
         <br>
-        <div class="input-group">
-            <span class="input-group-addon">Experiment</span>
+        <div class="input-group_name">
+            <span class="input-group_name-addon">Experiment</span>
             <input ng-model="data.exp" type="text" class="form-control" style="width:150px" required/>
         </div>
 
@@ -62,8 +63,8 @@
         <p>
             <a ng-click="addGroup()"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Group</a>
         </p>
-        <div ng-repeat="(i,grp) in data.groups track by $index" class="input-group expGroup">
-            <span class="input-group-addon">Group {{$index+1}}</span>
+        <div ng-repeat="(i,grp) in data.groups track by $index" class="input-group_name expGroup">
+            <span class="input-group_name-addon">Group {{$index+1}}</span>
             <input  ng-model="data.groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;
             <span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>
         </div>
@@ -89,11 +90,11 @@
                     <!--<h4 class="modal-title">Cohort Details</h4>-->
                 <!--</div>-->
                 <!--<div class="modal-body">-->
-                    <!--<div class="input-group">-->
-                        <!--<span class="input-group-addon">Cohort Name</span>-->
+                    <!--<div class="input-group_name">-->
+                        <!--<span class="input-group_name-addon">Cohort Name</span>-->
                         <!--<input ng-model="cname" type="text" class="form-control" style="width:150px" required>-->
 
-                        <!--<span class="input-group-addon">Number of vials</span>-->
+                        <!--<span class="input-group_name-addon">Number of vials</span>-->
                         <!--<input ng-model="nvials" type="text" class="form-control" style="width:120px" required>-->
                     <!--</div>-->
                     <!--<br>-->
@@ -101,8 +102,8 @@
                     <!--<p>-->
                         <!--<a ng-click="addGroup()"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Group</a>-->
                     <!--</p>-->
-                    <!--<div ng-repeat="(i,grp) in groups track by $index" class="input-group expGroup">-->
-                        <!--<span class="input-group-addon">Group {{$index+1}}</span>-->
+                    <!--<div ng-repeat="(i,grp) in groups track by $index" class="input-group_name expGroup">-->
+                        <!--<span class="input-group_name-addon">Group {{$index+1}}</span>-->
                         <!--<input  ng-model="groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;-->
                         <!--<span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>-->
                     <!--</div>-->

@@ -13,13 +13,15 @@
 }
 
 .videoName {
-    cursor:pointer;
     height: 33px;
+    margin-left:8px;
+    top:8px;
+    position:  relative;
 }
 .videoGlyphicon {
-    margin-left:8px;
-    margin-top:6px;
-    margin-right:4px;
+    margin-left:9px;
+    margin-top:8px;
+    margin-right:3px;
 }
 .noVideo {
     color:black;
@@ -35,4 +37,11 @@
     background-repeat:no-repeat;
     background-size:33px 33px;
 
+}
+.videoDiv {
+    cursor:pointer;
+    height:35px;
+    float:left;
+    margin-left:3px;
+    margin-right:3px;
 }

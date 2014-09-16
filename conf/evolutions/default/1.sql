@@ -36,8 +36,11 @@ create table experiment (
 create table video (
   video_id                  bigint auto_increment not null,
   video_name                varchar(255) not null,
+  group_name                varchar(255) not null,
+  camera_id                 bigint not null,
+  video_file_path           varchar(255) not null,
   cohort_cohort_id          bigint not null,
-  video_blob                varchar(255),
+  uploaded_by_account_id    bigint not null,
   uploaded_timestap         datetime not null,
   constraint pk_video primary key (video_id))
 ;
@@ -48,6 +51,8 @@ alter table cohort add constraint fk_cohort_experiment_2 foreign key (experiment
 create index ix_cohort_experiment_2 on cohort (experiment_experiment_id);
 alter table video add constraint fk_video_cohort_3 foreign key (cohort_cohort_id) references cohort (cohort_id) on delete restrict on update restrict;
 create index ix_video_cohort_3 on video (cohort_cohort_id);
+alter table video add constraint fk_video_uploaded_by_account_4 foreign key (uploaded_by_account_id) references account (id) on delete restrict on update restrict;
+create index ix_video_uploaded_by_account_4 on video (uploaded_by_account_id);
 
 
 
