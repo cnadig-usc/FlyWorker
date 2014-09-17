@@ -45,3 +45,12 @@
     margin-left:3px;
     margin-right:3px;
 }
+.typeaheadLoading {
+    background-image: url('/assets/images/ajax-loader.gif');
+    background-repeat:no-repeat;
+    background-position-x:100%;
+
+}
+.retrieveCohortTypeahead > .dropdown-menu {
+    width:80%;
+}

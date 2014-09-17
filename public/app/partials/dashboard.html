@@ -84,52 +84,18 @@
         <h3> Continue Tracking</h3>
     </div>
     <div class="modal-body">
-        <div class="input-group">
-            <span class="input-group-addon">Cohort Name</span>
-            <input type="text" ng-model="selected" typeahead-editable="false" typeahead="state.cohort_name for state in getCohorts($viewValue)" typeahead-loading="loadingLocations" class="form-control">
-            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+        <div class="input-group retrieveCohortTypeahead">
+            <label class="input-group-addon">Cohort Name</label>
+            <input ng-class="{typeaheadLoading: loadingLocations}" style="float:left;" type="text" ng-model="selected"  typeahead="cohort.cohort_name for cohort in getCohorts($viewValue)" typeahead-editable="false" typeahead-loading="loadingLocations" class="form-control" typeahead-on-select="selectCohortFromList($item,$model,$label);">
+
         </div>
+        <br/>
+        <alert ng-repeat="alert in continueTrackingAlerts" type="alert.type" close="closeContinueTrackingAlert($index)">{{alert.msg}}</alert>
+
     </div>
     <div class="modal-footer">
+
         <button class="btn btn-primary" ng-click="openSelectedCohort()">Open cohort</button>
         <button class="btn btn-warning" ng-click="cancelContinueTrackingModal()">Cancel</button>
     </div>
 </script>
-
-
-
-<!--<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">-->
-    <!--<div class="modal-dialog modal-sm">-->
-        <!--<div class="modal-content">-->
-            <!--<form name="newCohort" ng-submit="createCohort()" novalidate>-->
-                <!--<div class="modal-header">-->
-                    <!--<a ng-click="resetNewCohortForm()" href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>-->
-                    <!--<h4 class="modal-title">Cohort Details</h4>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<div class="input-group">-->
-                        <!--<span class="input-group-addon">Cohort Name</span>-->
-                        <!--<input ng-model="cname" type="text" class="form-control" style="width:150px" required>-->
-
-                        <!--<span class="input-group-addon">Number of vials</span>-->
-                        <!--<input ng-model="nvials" type="text" class="form-control" style="width:120px" required>-->
-                    <!--</div>-->
-                    <!--<br>-->
-                    <!--<br>-->
-                    <!--<p>-->
-                        <!--<a ng-click="addGroup()"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Group</a>-->
-                    <!--</p>-->
-                    <!--<div ng-repeat="(i,grp) in groups track by $index" class="input-group expGroup">-->
-                        <!--<span class="input-group-addon">Group {{$index+1}}</span>-->
-                        <!--<input  ng-model="groups[i]"  type="text" class="form-control" style="width:117px" required>&nbsp;-->
-                        <!--<span ng-click="removeGroup($index)" class="glyphicon glyphicon-remove" style="font-size:15px;"></span>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                    <!--<input type="submit"  class="btn btn-primary" data-dismiss="modal" ng-disabled="newCohort.$invalid" value="Create Cohort"/>-->
-                    <!--<button type="button" ng-click="resetNewCohortForm()" class="btn btn-default" data-dismiss="modal" >Close</button>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
