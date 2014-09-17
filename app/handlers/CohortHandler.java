@@ -1,13 +1,17 @@
 package handlers;
 
 import com.avaje.ebean.Ebean;
+
 import constants.AppConstant;
 import exceptions.VideoMungerException;
 import models.Account;
 import models.Cohort;
 import models.Experiment;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javax.persistence.PersistenceException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,6 +67,37 @@ public class CohortHandler {
                 .eq("cohort_id", cohort_id)
                 .findUnique();
         return cohort;
+    }
+
+    public static String retrieveCohorts(String str) throws VideoMungerException {
+        List<Cohort> cohortList = Ebean.find(Cohort.class)
+                .where()
+                    .like("cohort_name","%"+str+"%")
+                .orderBy("created_timestamp desc")
+                .setMaxRows(50)
+                .findList();
+        JSONArray jArray = new JSONArray();
+        try {
+
+            for (Cohort cohort : cohortList) {
+                JSONObject cohort_json_obj = new JSONObject();
+                cohort_json_obj.put("cohort_name", cohort.getCohort_name());
+                cohort_json_obj.put("cohort_id",  cohort.getCohort_id());
+                jArray.add(cohort_json_obj);
+                System.out.println(cohort_json_obj.toJSONString());
+            }
+
+            System.out.println(jArray.toJSONString());
+
+            return jArray.toJSONString();
+
+        }
+//        catch (JSONException jse) {
+//            throw new VideoMungerException("JSON conversion error retrieving cohort name list: "+jse.getMessage());
+//        }
+        catch (Exception e) {
+            throw new VideoMungerException("Error retrieving cohort name list: "+e.getMessage());
+        }
     }
 
 }

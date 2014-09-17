@@ -1,4 +1,4 @@
-name := "videoMunger"
+name := "flyWorker"
 
 version := "1.0-SNAPSHOT"
 
