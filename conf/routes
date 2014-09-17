@@ -12,6 +12,8 @@ GET     /partials/*any              controllers.Application.loadPartial(any)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+GET     /getCohorts/:cstr           controllers.Application.retrieveCohortNames(cstr: String)
+
 
 GET     /*any                       controllers.Application.index(any)
 
@@ -20,3 +22,4 @@ POST    /authenticate               controllers.Application.authenticate()
 POST    /videoUpload                controllers.Application.videoUpload()
 
 POST    /createCohort               controllers.Application.createCohort()
+

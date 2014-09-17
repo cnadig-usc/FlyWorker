@@ -46,7 +46,7 @@ function MainController ($scope, $location, $cookies) {
         }
     $scope.setLoginNavigationBar();
 }
-function DashboardCtrl ($scope, $cookies, $modal, $upload) {
+function DashboardCtrl ($scope, $cookies, $modal, $upload,$http) {
     if ($cookies.VideoMunger) {
         $scope.login = $cookies["VideoMunger"];
         $scope.setDashboardNavigationBar();
@@ -88,6 +88,27 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
              modalInstance.result.then($scope.createCohort);
          };
 
+    $scope.openContinueTrackingModal = function () {
+        var modalInstance = $modal.open({
+                         templateUrl:'continueTracking.html',
+                         controller:ContinueTrackingModalCtrl,
+                         resolve: {
+                            login: function () {
+                                return $scope.login;
+                            }
+                         }
+                     });
+
+                     //new cohort form close
+                     modalInstance.result.then($scope.openCohort);
+                 };
+
+
+
+    $scope.openCohort = function(result ) {
+        console.log(result);
+    }
+
     $scope.createCohort= function(result) {
         console.log(result);
         $scope.openCohort = true;
@@ -122,6 +143,57 @@ function DashboardCtrl ($scope, $cookies, $modal, $upload) {
             }
         }
     }
+}
+function ContinueTrackingModalCtrl($scope,$modalInstance, $http,login){
+    $scope.cancelContinueTrackingModal = function () {
+        $modalInstance.dismiss('cancel continue tracking');
+    }
+    $scope.openSelectedCohort = function () {
+        $modalInstance.close("done");
+    }
+
+    $scope.selected = undefined;
+//    $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
+    $scope.states = [];
+
+    $scope.getCohorts = function (str) {
+
+        console.log('getCohorts : '+str);
+//        return ['apple','orange','lemon','pineapple'];
+        return $http.get('/getCohorts/'+str).then(function(res){
+              console.log(res);
+              var addresses = [];
+              angular.forEach(res.data, function(item){
+                addresses.push(item.formatted_address);
+              });
+              return addresses;
+        });
+
+    }
+
+//        $.ajax({
+//            url:"/getCohorts/"+str,
+//            type:"GET"
+//        }).success(function(data,textStatus,jqXHR){
+//            console.log('success with get cohorts');
+//            console.log(data);
+//            var arr = JSON.parse(data);
+////            for (var obj in arr) {
+////                $scope.states.push(obj.cohort_name);
+////            }
+//            $scope.states = ['apple','orange','lemon','pineapple'];
+//
+//            return $scope.states;
+//
+//        }).error(function(data,textStatus,jqXHR) {
+//            console.log('error with get cohorts');
+//            console.log(data);
+//        })
+//    }
+
+
+
 }
 function NewCohortFormCtrl($scope,$modalInstance,login) {
 

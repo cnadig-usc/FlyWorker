@@ -84,30 +84,16 @@ public class Application extends Controller {
         final Http.MultipartFormData formData = request().body().asMultipartFormData();
         final Http.MultipartFormData.FilePart filePart = formData.getFiles().get(0);
 
-        System.out.println(filePart.getFilename()); //yay
-        System.out.println(filePart.getContentType());
-        System.out.println(filePart.getFilename().indexOf(".avi"));
-        System.out.println(filePart.getFilename().length());
-
-        System.out.println(filePart.getFilename().indexOf(".avi"));
-        System.out.println(filePart.getContentType());
-
         if (filePart.getFilename().indexOf(".avi") != filePart.getFilename().length()-4 || !filePart.getContentType().equals("video/avi")) {
             System.out.println("File extension doesn't match the required format");
             return badRequest("File format not AVI");
         }
 
 
-        System.out.println(filePart.getFile().length());
         File file = filePart.getFile();
 
-        System.out.println(file.getAbsoluteFile());
-        System.out.println(file.getAbsolutePath());
-        System.out.println(file.getName());
-        System.out.println(file.getParent());
-
         video_upload_path = video_upload_path +"/" +cohort_id + "/"+video_name+".avi";
-        params.put(AppConstant.VIDEO_FILE_PATH,video_upload_path);
+        params.put(AppConstant.VIDEO_FILE_PATH, video_upload_path);
 
         try {
 //            FileUtils.moveFile(file, new File("/Users/johntower/Desktop/uploaddir/"+filePart.getFilename()));
@@ -151,37 +137,58 @@ public class Application extends Controller {
         return ok("{\"cohort_id\":\""+cohort_id.toString()+"\"}");
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static Result retrieveCohortNames(String cohort_name_str) {
 
-        System.out.println("testing");
-
-
-
-        String [] cmd = {"/Users/johntower/Videomunger/app/controllers/FluorescoreCMD", "/Users/johntower/Videomunger/app/controllers/AviFileChunk1_View0.avi", "25",
-                "/Users/johntower/Videomunger/app/controllers/AviFileChunk1_View1.avi", "25", "n", "-1"};
-
-        ProcessBuilder builder = new ProcessBuilder(cmd);
-
-        Map<String,String> environ = builder.environment();
-        final Process process = builder.start();
-        InputStream is = process.getInputStream();
-        InputStreamReader isr =  new InputStreamReader(is);
-        BufferedReader br = new BufferedReader(isr);
-
-        String line;
-        while ((line=br.readLine())!=null) {
-
-            System.out.println(line);
+        System.out.println("retrieve cohort: "+cohort_name_str);
+        try {
+            return ok(CohortHandler.retrieveCohorts(cohort_name_str));
+        } catch (VideoMungerException e) {
+            return badRequest(e.getMessage());
         }
-        System.out.println("Program terminated");
+        catch (Exception e ) {
+            return badRequest(e.getMessage());
+        }
+    }
 
-
+//    public static void main(String[] args) {
+//        try {
+//            System.out.println(CohortHandler.retrieveCohorts("test"));
+//        } catch (VideoMungerException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+//    public static void main(String[] args) throws IOException, InterruptedException {
+//
+//        System.out.println("testing");
+//
+//
+//
+//        String [] cmd = {"/Users/johntower/Videomunger/app/controllers/FluorescoreCMD", "/Users/johntower/Videomunger/app/controllers/AviFileChunk1_View0.avi", "25",
+//                "/Users/johntower/Videomunger/app/controllers/AviFileChunk1_View1.avi", "25", "n", "-1"};
+//
+//        ProcessBuilder builder = new ProcessBuilder(cmd);
+//
+//        Map<String,String> environ = builder.environment();
+//        final Process process = builder.start();
+//        InputStream is = process.getInputStream();
+//        InputStreamReader isr =  new InputStreamReader(is);
+//        BufferedReader br = new BufferedReader(isr);
+//
+//        String line;
+//        while ((line=br.readLine())!=null) {
+//
+//            System.out.println(line);
+//        }
+//        System.out.println("Program terminated");
+//
+//    }
 //        try {
 //            Runtime.getRuntime().exec(cmd);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-    }
+
 
 //    def getURI(any: String): String = any match {
 //        case "main" => "/public/html/main.html"

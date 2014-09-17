@@ -11,7 +11,7 @@
                     <a class="list-group-item active" style="color:white;"> ... </a>
                     <!--<a data-toggle="modal" data-target=".bs-example-modal-sm" class="list-group-item">Track new cohort</a>-->
                     <a class="list-group-item" ng-click="openNewCohortForm()">Track New Cohort</a>
-                    <a class="list-group-item">Continue tracking </a>
+                    <a class="list-group-item" ng-click="openContinueTrackingModal()">Continue tracking </a>
                 </ul>
 
             </div>
@@ -41,7 +41,7 @@
 <script type="text/ng-template" id="newCohortForm.html">
     <div class="modal-header">
         <a ng-click="cancelNewCohortForm()" href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
-        <h4 class="modal-title">Cohort Details</h4>
+        <h3 class="modal-title">Cohort Details</h3>
     </div>
     <div class="modal-body">
         <div class="input-group">
@@ -76,7 +76,24 @@
         <button class="btn btn-primary" ng-click="createNewCohort()">Create cohort</button>
         <button class="btn btn-warning" ng-click="cancelNewCohortForm()">Cancel</button>
     </div>
+</script>
 
+<script type="text/ng-template" id="continueTracking.html">
+    <div class="modal-header">
+        <a ng-click="cancelContinueTrackingModal()" href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+        <h3> Continue Tracking</h3>
+    </div>
+    <div class="modal-body">
+        <div class="input-group">
+            <span class="input-group-addon">Cohort Name</span>
+            <input type="text" ng-model="selected" typeahead-editable="false" typeahead="state.cohort_name for state in getCohorts($viewValue)" typeahead-loading="loadingLocations" class="form-control">
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="openSelectedCohort()">Open cohort</button>
+        <button class="btn btn-warning" ng-click="cancelContinueTrackingModal()">Cancel</button>
+    </div>
 </script>
 
 
